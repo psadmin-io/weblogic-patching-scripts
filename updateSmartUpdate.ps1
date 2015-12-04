@@ -1,0 +1,1 @@
+java -jar e:\installers\weblogic1036-2015-CVE-Patches\patch-client-installer330_generic32.jar -mode=silent -silent_xml=silent.xml

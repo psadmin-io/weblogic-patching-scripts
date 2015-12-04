@@ -1,0 +1,1 @@
+(get-service *-pia | select -expand name) | foreach-object {stop-service $_}
