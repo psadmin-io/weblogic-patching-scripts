@@ -8,19 +8,19 @@ These scripts are writtin in PowerShell. If PowerShell scripts are not enabled o
 
 1. Install new SmartUpdate version (3.3.0)
 
-        installSmartUpdate.ps1
+        .\installSmartUpdate.ps1
 
     The `silent.xml` file is used for a silent install (no prompts). The installation directory is set to `e:\oracle`. If you want a different directory, change the value for "BEAHOME".
 
 1. Stop all web servers running on the server
 
-        stopPIAServices.ps1
+        .\stopPIAServices.ps1
 
     The script looks for any Windows service that containts "*-PIA" in the name. If you have any WebLogic domains were not created by the `installNTService` script, you may need to shut them down by hand.
 
 1. Prepare and copy files from the `weblogic1036-2015-CVE-Patches` folder
 
-        prepareFiles.ps1
+        .\prepareFiles.ps1
 
     This script performs tasks to prepare different files for patching: 
 
@@ -30,25 +30,27 @@ These scripts are writtin in PowerShell. If PowerShell scripts are not enabled o
 
 1. Apply both WebLogic patches
 
-        applyWebLogicPatches.ps1
+        .\applyWebLogicPatches.ps1
 
     Both patches are applied to WebLogic using the `bsu` command. The script assumes your patches are in the folder `e:\patches\cve-2015-4852`.
 
+    NOTE: On one of our servers, the second patch stalled during the "Checking for Conflicts" step. If the script stalls there for more than a few minutes, hit `Cntl-J`.
+
 1. Update the JAVA_HOME values
 
-        updateJavaVersion.ps1
+        .\updateJavaVersion.ps1
 
     The `JAVA_HOME` value in the `setEnv.cmd` script will be updated to the new path. **This script must be updated for each server. The paths in the script are hard-coded.** (The hard coding is an obvious candidate to fix next. Should be able to use the Get-ChildItem cmdlet to find all the `setEnv.cmd` files.)
 
 1. Update Registry value for JAVA_HOME
 
-        updateRegistryJavaVersion.ps1
+        .\updateRegistryJavaVersion.ps1
 
     The `JAVA_HOME` value in the Registry for each web service will be updated. **This script must be updated for each server. The paths in the script are hard-coded.** (The next place for improvement. Need to find a search cmdlet for the Registry. Could look for `-PIA` in the service name.)
 
 1. Start all web servers running on the server.
 
-        startPIAServices.ps1
+        .\startPIAServices.ps1
 
     Again, this looks for all Windows services that have `*-PIA` in the name and starts them.
 
